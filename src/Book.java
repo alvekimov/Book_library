@@ -6,8 +6,7 @@ public class Book {
     private int year;
 
 
-
-    public Book(String title, String author, String genre, int year) {
+    public Book(int id, String title, String author, int year, String genre) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -35,4 +34,8 @@ public class Book {
         return year;
     }
 
+    @Override
+    public String toString() {
+        return "Книга: '" + title + "', Автор: '" + author + "', Год: " + year + ", Жанр: '" + genre + "'";
+    }
 }
