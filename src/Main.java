@@ -30,7 +30,7 @@ public class Main {
                 "5 - Для получения книги в пользование;\n" +
                 "6 - Для возвращения книги в библиотеку;\n" +
                 "7 - Повторить список команд;\n" +
-                "8 - Сохранить/загрузить список книг;\n" +
+                "8 - Загрузить список книг;\n" +
                 "9 - Выход из программы.");
         Library library = new Library();
         Scanner sc = new Scanner(System.in);
@@ -60,13 +60,14 @@ public class Main {
                     System.out.print("Введите жанр книги: ");
                     String scanGenre = sc.nextLine();
                     library.addBook(scanTitle, scanAuthor, scanYear, scanGenre);
-
+                    Library.booksSaver();
                     break;
                 case 2:
                     // Удаление книги
                     System.out.print("Введите ID или название книги для удаления: ");
                     String scanTitleDelete = sc.next();
                     library.removeBook(scanTitleDelete);
+                    Library.booksSaver();
                     break;
                 case 3:
                     //поиск книги
@@ -87,25 +88,13 @@ public class Main {
                 case 7:
                     //Повторение команд
                     //Временно поиск всех книг, что есть
-
                     library.printAllBooks();
                     break;
                 case 8:
-                    //Сохранение или загрузка списка книг в зависимости от выбора пользователя
-                    System.out.println("Выберите действие со списком книг:\n" +
-                            "1 - Сохранить список;\n" +
-                            "2 - Загрузить список;\n");
-                    numberCommand = sc.nextInt();
-                    switch (numberCommand) {
-                        case 1:
-                            Library.booksSaver();
-                            break;
-                        case 2:
-                            Library.booksLoader();
-                            break;
-                        default:
-                            System.out.println("Введена неверная команда");
-                    }
+                    //Загрузка списка книг
+                    Library.booksLoader();
+                    System.out.println("Список книг успешно загружен.");
+                    return;
                 case 9:
                     System.out.println("Программа завершена.");
                     sc.close();
