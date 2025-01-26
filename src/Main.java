@@ -1,8 +1,9 @@
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws BookNotFoundException {
+    public static void main(String[] args) throws BookNotFoundException, IOException {
         /*Система управления библиотекой
         Цель проекта: разработать приложение для управления библиотекой, позволяющее добавлять, удалять, искать и выдавать книги.
                 Требования к функционалу:
@@ -29,7 +30,8 @@ public class Main {
                 "5 - Для получения книги в пользование;\n" +
                 "6 - Для возвращения книги в библиотеку;\n" +
                 "7 - Повторить список команд;\n" +
-                "8 - Выход из программы.");
+                "8 - Сохранить/загрузить список книг;\n" +
+                "9 - Выход из программы.");
         Library library = new Library();
         Scanner sc = new Scanner(System.in);
         int numberCommand = 0;
@@ -89,9 +91,26 @@ public class Main {
                     library.printAllBooks();
                     break;
                 case 8:
+                    //Сохранение или загрузка списка книг в зависимости от выбора пользователя
+                    System.out.println("Выберите действие со списком книг:\n" +
+                            "1 - Сохранить список;\n" +
+                            "2 - Загрузить список;\n");
+                    numberCommand = sc.nextInt();
+                    switch (numberCommand) {
+                        case 1:
+                            Library.booksSaver();
+                            break;
+                        case 2:
+                            Library.booksLoader();
+                            break;
+                        default:
+                            System.out.println("Введена неверная команда");
+                    }
+                case 9:
                     System.out.println("Программа завершена.");
                     sc.close();
                     return;
+
                 default:
                     System.out.println("Введена неверная команда");
             }

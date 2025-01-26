@@ -1,12 +1,13 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    private List<Book> books;
+    private static List<Book> books;
     private int nextId;
 
     public Library() {
-        this.books = new ArrayList<>();
+        books = new ArrayList<>();
         this.nextId = 1;
     }
 
@@ -55,5 +56,39 @@ public class Library {
         for (Book book : books) {
             System.out.println(book);
         }
+    }
+
+    public static void booksSaver () throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("books.txt"))) {
+            for (Book book : books) {
+                String line = book.getId() + "," + book.getTitle() + ", " + book.getAuthor() + ", " +
+                        book.getYear() + ", " + book.getGenre();
+                writer.write(line);
+                writer.newLine();
+            }
+            System.out.println("Книги сохранены в файл 'books.txt'."); // Уведомляем о сохранении книг.
+        }
+    }
+
+    public static void booksLoader() throws IOException {
+        List<Book> books = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("books.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(", ");
+
+                if (parts.length == 5) { // Проверяем, что все необходимые поля присутствуют
+                    int id = Integer.parseInt(parts[0]);
+                    String title = parts[1];
+                    String author = parts[2];
+                    String genre = parts[3];
+                    int year = Integer.parseInt(parts[4]);
+
+                    books.add(new Book(id, title, author, year, genre)); // Создаём объект Book
+                }
+            }
+        }
+
     }
 }
