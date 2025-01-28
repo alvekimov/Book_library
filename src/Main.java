@@ -88,7 +88,6 @@ public class Main {
                 case 7:
                     //Повторение команд
                     //Временно поиск всех книг, что есть
-
                     library.printAllBooks();
                     break;
                 case 8:
