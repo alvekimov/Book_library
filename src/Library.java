@@ -1,6 +1,9 @@
+import UsersBlock.User;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Library {
     private static List<Book> books;
@@ -90,5 +93,23 @@ public class Library {
             }
         }
 
+    }
+
+    public void loadLibrary() { // загружаем список пользователей из файла
+
+        try(Scanner scanner = new Scanner(new File("books.txt"))) {
+            scanner.useDelimiter(",|\r");
+            while (scanner.hasNext()) {
+                int id = scanner.nextInt();
+                String title = scanner.next();
+                String author = scanner.next();
+                int year = scanner.nextInt();
+                String genre = scanner.next();
+                Book book = new Book(id, title, author, year, genre);
+                books.add(book);
+            }
+        } catch (FileNotFoundException fne) {
+            fne.printStackTrace();
+        }
     }
 }

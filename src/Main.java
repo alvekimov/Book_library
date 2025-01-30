@@ -1,5 +1,6 @@
+import UsersBlock.Authorisation;
+
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -20,7 +21,47 @@ public class Main {
 
         Реализовать использование коллекций Java (ArrayList, HashMap).*/
 
+        Authorisation a = new Authorisation();
+        a.loadUsers();
         System.out.println("Добрый день Вас приветствует электронный помощник библиотеки.");
+        System.out.println("Please enter \"0\" to log in into your library with your surname and password or \"1\" to create a new account");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        if (choice == 0) {
+            while (true) {
+                System.out.print("Surname ");
+                String surname = scanner.next();
+                System.out.print("Password ");
+                String password = scanner.next();
+                if(!a.checkUser(surname, password)) {
+                    break;
+                } else {
+                    System.out.println("Wrong Name and/or Password. Please click \"Enter\" to try again or put 1 - to create new account");
+                    if(scanner.next().equals("1")) {
+                        System.out.print("Surname ");
+                        surname = scanner.next();
+                        System.out.print("Name ");
+                        String name = scanner.next();
+                        System.out.print("Password ");
+                        password = scanner.next();
+                        a.addUser(surname, name, password);
+                    }
+
+                }
+            }
+        }else if (choice == 1) {
+            System.out.println("Please enter your data:");
+            System.out.print("Surname ");
+            String surname = scanner.next();
+            System.out.print("Name ");
+            String name = scanner.next();
+            System.out.print("Password ");
+            String password = scanner.next();
+            a.addUser(surname, name, password);
+            System.out.println("Please log in into your library with your surname and password");
+        }
+
+
 
         System.out.println("Для взаимодействия с библиотекой ознакомьтесь со списком команд:\n" +
                 "1 - Добавить книгу в библиотеку;\n" +
@@ -33,6 +74,7 @@ public class Main {
                 "8 - Загрузить список книг;\n" +
                 "9 - Выход из программы.");
         Library library = new Library();
+        library.loadLibrary();
         Scanner sc = new Scanner(System.in);
         int numberCommand = 0;
 
@@ -94,7 +136,7 @@ public class Main {
                     //Загрузка списка книг
                     Library.booksLoader();
                     System.out.println("Список книг успешно загружен.");
-                    return;
+                    break;
                 case 9:
                     System.out.println("Программа завершена.");
                     sc.close();
