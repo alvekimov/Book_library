@@ -1,10 +1,9 @@
-package UsersBlock;
-
 public class User {
 
     private String surname;
     private String name;
     private String password;
+    private UsersLibrary library;
 
     public User(String surname, String name, String password) {
         this.surname = surname;

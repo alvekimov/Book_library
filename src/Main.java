@@ -1,5 +1,3 @@
-import UsersBlock.Authorisation;
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -24,44 +22,46 @@ public class Main {
         Authorisation a = new Authorisation();
         a.loadUsers();
         System.out.println("Добрый день Вас приветствует электронный помощник библиотеки.");
-        System.out.println("Please enter \"0\" to log in into your library with your surname and password or \"1\" to create a new account");
+        System.out.println("Введите \"0\" для авторизации в библиотеке по фамилии и паролю или \"1\" создания новой учётной записи");
         Scanner scanner = new Scanner(System.in);
+        while (!scanner.hasNextInt()) {
+            String r = scanner.next();
+            System.out.println("Неверная комманда. Введите \"0\" для авторизации в библиотеке по фамилии и паролю или \"1\" создания новой учётной записи");
+        }
         int choice = scanner.nextInt();
         if (choice == 0) {
             while (true) {
-                System.out.print("Surname ");
+                System.out.print("Фамилия ");
                 String surname = scanner.next();
-                System.out.print("Password ");
+                System.out.print("Пароль ");
                 String password = scanner.next();
                 if(!a.checkUser(surname, password)) {
                     break;
                 } else {
-                    System.out.println("Wrong Name and/or Password. Please click \"Enter\" to try again or put 1 - to create new account");
+                    System.out.println("Неверные фамилия или пароль. Введите \"0\" для авторизации или 1 - для создания новой учётной записи");
                     if(scanner.next().equals("1")) {
-                        System.out.print("Surname ");
+                        System.out.print("Фамилия ");
                         surname = scanner.next();
-                        System.out.print("Name ");
+                        System.out.print("Имя ");
                         String name = scanner.next();
-                        System.out.print("Password ");
+                        System.out.print("Пароль ");
                         password = scanner.next();
                         a.addUser(surname, name, password);
                     }
-
                 }
             }
         }else if (choice == 1) {
-            System.out.println("Please enter your data:");
-            System.out.print("Surname ");
+            System.out.println("Введите ваши данные:");
+            System.out.print("Фамилия ");
             String surname = scanner.next();
-            System.out.print("Name ");
+            System.out.print("Имя ");
             String name = scanner.next();
-            System.out.print("Password ");
+            System.out.print("Пароль ");
             String password = scanner.next();
             a.addUser(surname, name, password);
-            System.out.println("Please log in into your library with your surname and password");
+            System.out.println("Войдите в личный кабинет по фамилии и паролю");
         }
-
-
+        UsersLibrary usersLibrary = new UsersLibrary();
 
         System.out.println("Для взаимодействия с библиотекой ознакомьтесь со списком команд:\n" +
                 "1 - Добавить книгу в библиотеку;\n" +
@@ -123,6 +123,9 @@ public class Main {
                     break;
                 case 5:
                     //Получение книги
+                    System.out.println("Введите название книги, которую хотите взять?");
+                    String booksName = sc.next();
+//                    usersLibrary.borrowBookFromLibrary(library.);
                     break;
                 case 6:
                     //Возврат книги

@@ -13,7 +13,6 @@ public class Book {
         this.genre = genre;
         this.year = year;
     }
-
     public int getId() {
         return id;
     }
